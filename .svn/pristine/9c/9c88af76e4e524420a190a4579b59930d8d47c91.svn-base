@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using TKBase.Framework.MQTT.Client;
+using TKBase.Framework.MQTT.Protocol;
+using TKBase.Framework.Serializer;
+
+namespace TKBase.Framework.MQTT
+{
+    /// <summary>
+    /// Mqtt帮助类
+    /// </summary>
+    public class MqttHelp<T> where T : IMqttClientChannelOptions
+    {
+        public static IMqttClient mqttClient;
+
+        static MqttHelp()
+        {
+            if (mqttClient == null)
+            {
+                mqttClient = new MqttFactory().CreateMqttClient();
+            }
+            if (!mqttClient.IsConnected)
+            {
+                Connect();
+            }
+        }
+        public static void Connect()
+        {
+            MqttClientOptions options = new MqttClientOptions
+            {
+                ChannelOptions = Configuration.Config.Bind<T>("Middleware.json", typeof(T).Name)
+            };
+            options.CleanSession = true;
+            options.KeepAlivePeriod = TimeSpan.FromSeconds(WebSocketConfig.KeepAlivePeriod);
+            var task = mqttClient.ConnectAsync(options).Result;
+        }
+
+        /// <summary>
+        /// 发布
+        /// </summary>
+        /// <typeparam name="F"></typeparam>
+        /// <param name="Topic"></param>
+        /// <param name="Entity"></param>
+        public static async Task Publish<F>(string Topic, F Entity) where F : class
+        {
+            string Messsage = SerializerJson.SerializeObject(Entity);
+            await Publish(Topic, Messsage);
+        }
+
+        /// <summary>
+        /// 发布
+        /// </summary>
+        /// <param name="Topic"></param>
+        /// <param name="Messsage"></param>
+        /// <returns></returns>
+        public static async Task Publish(string Topic, string Messsage)
+        {
+            MqttApplicationMessage appMsg = new MqttApplicationMessage()
+            {
+                Topic = Topic,
+                Payload = Encoding.UTF8.GetBytes(Messsage),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtMostOnce,
+                Retain = false
+
+            };
+            if (!mqttClient.IsConnected)
+                Connect();
+            System.Console.WriteLine("发送Mqtt");
+            await mqttClient.PublishAsync(appMsg);
+            System.Console.WriteLine("发送Mqtt完成");
+        }
+
+        /// <summary>
+        /// 订阅
+        /// </summary>
+        /// <param name="Topic"></param>
+        public static async Task Subscribe(string Topic)
+        {
+            if (!mqttClient.IsConnected)
+                Connect();
+            await mqttClient.SubscribeAsync(new List<TopicFilter> { new TopicFilter(Topic, MqttQualityOfServiceLevel.AtMostOnce) });
+        }
+
+        /// <summary>
+        /// 订阅
+        /// </summary>
+        /// <param name="Topic"></param>
+        public static async Task Subscribe<F>(string Topic, Action<F> action) where F : class
+        {
+            await Subscribe(Topic);
+            if (action != null)
+            {
+                mqttClient.ApplicationMessageReceived += (o, s) =>
+                {
+                    string json = Encoding.UTF8.GetString(s.ApplicationMessage.Payload);
+                    action(SerializerJson.DeserializeObject<F>(json));
+                };
+                
+            }
+        }
+    }
+}

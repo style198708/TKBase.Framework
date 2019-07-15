@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>TKBase.Framework.Dapper</id>
+    <version>1.0.0</version>
+    <authors>TKBase.Framework.Dapper</authors>
+    <owners>TKBase.Framework.Dapper</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="TKBase.Framework.Configuration" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.IdentityModel.Protocols" version="5.2.4" exclude="Build,Analyzers" />
+        <dependency id="MySql.Data" version="8.0.11" exclude="Build,Analyzers" />
+        <dependency id="System.Data.SqlClient" version="4.4.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\gitlab\framework\TKBase.Framework.Dapper\bin\Debug\netcoreapp2.1\TKBase.Framework.Dapper.dll" target="lib\netcoreapp2.1\TKBase.Framework.Dapper.dll" />
+  </files>
+</package>

@@ -1,0 +1,132 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using TKBase.Framework.Dapper;
+using TKBase.Framework.EMay;
+using System.Xml;
+using System.Xml.Linq;
+using TKBase.Framework.RestSharp;
+using TKBase.Framework.Helper;
+using TKBase.Framework.Dapper.Lambda;
+using System.Text;
+using System.Reflection;
+using TKBase.Framework.RabbitMQ;
+using TKBase.Framework.Cabinet;
+
+namespace TKBase.Framework.WebSite
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+
+            //var list = DP.Create<ProductShelfRecord>().ToList().AsList();
+
+            //RabbitMQService.QueueDelete("1030150513141879784");
+            //long total = 0;
+            //var sddd = DP.GetPage<Product>(1, 15, out total, "SELECT SaleTime ,SUM(Price) as Price from (SELECT date_format(SaleTime,'%Y-%m-%d') as SaleTime , Price ,SupplierCode from Product where StatusFlag=3 and DeleteFlag=0 and  SupplierCode='1040723159508193280' ) as T_Product GROUP BY SaleTime");
+
+
+            //string url = "https://api.weixin.qq.com/sns/oauth2/access_token";
+            //access_token token = new access_token()
+            //{
+            //    appid = WxConfig.appid,
+            //    secret = WxConfig.secret,
+            //    code = "021tasN40IlceK1UbAL40FBiN40tasNN",
+            //};
+
+            //RestClient client = new RestClient(url);
+            //IRestRequest request = new RestRequest(Method.GET);
+            //request.AddParameter("appid", token.appid);
+            //request.AddParameter("secret", token.secret);
+            //request.AddParameter("code", token.code);
+            //request.AddParameter("grant_type", token.grant_type);
+            ////
+            //IRestResponse<access_tokenresult> response = client.Execute<access_tokenresult>(request);
+
+
+
+            //int count = DP.DeleteEntity<RelationProductCategory>(p => p.Type == 2 && p.Code == "00001");
+
+            //string url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+
+            //XDocument document = new XDocument();
+
+            //XElement root = new XElement("xml");
+
+            //root.Add(new XElement("appid", 1));
+            //root.Add(new XElement("mch_id", 1));
+            //root.Add(new XElement("device_info", 1));
+            //root.Add(new XElement("nonce_str", 1));
+            //root.Add(new XElement("sign_type", 1));
+            //root.Add(new XElement("body", 1));
+            //root.Add(new XElement("attach", 1));
+            //root.Add(new XElement("out_trade_no", 1));
+            //root.Add(new XElement("fee_type", 1));
+            //root.Add(new XElement("total_fee", 1));
+            //root.Add(new XElement("spbill_create_ip", 1));
+            //root.Add(new XElement("time_start", 1));
+            //root.Add(new XElement("time_expire", 1));
+            //root.Add(new XElement("goods_tag", 1));
+            //root.Add(new XElement("notify_url", 1));
+            //root.Add(new XElement("trade_type", 1));
+            //root.Add(new XElement("limit_pay", 1));
+            //root.Add(new XElement("scene_info", 1));
+            //document.Add(root);
+            //string xml = document.ToString();
+
+            //byte[] data = System.Text.Encoding.UTF8.GetBytes(xml);
+
+            //System.Net.HttpWebResponse response = null;
+
+            //byte[] type = HttpHelper.SendRequestData(url, data, ref response);
+
+            //string t = System.Text.Encoding.UTF8.GetString(type);
+
+            //CabinetHelp.SendMessage(101, new Cabinet.Entity.CabinetParam()
+            //{
+            //    Queue = "1043041192733970432",
+            //    Message= "你好",
+            //    Action = new List<object>() { "msg"}
+
+            //});
+
+            //RabbitMQService.Send("1043041192733970432", "33333");
+            //RabbitMQService.Send("1043041192733970432", "33444");
+            //RabbitMQService.Send("1043041192733970432", "5555");
+
+
+
+            ProductShelfItem shelfItem = new ProductShelfItem()
+            {
+                ShelfCode = "3333",
+                ShelfType = 1,
+                ProductName = "",
+                Price = 0,
+                ProCount = 2,
+                CategoryCode = "",
+                RFIDs = "121212",
+                ICO = "",
+                ProductCode = "",
+                Specifications = ""
+            };
+            //transaction.AddTs(shelfItem);
+            string msg = string.Empty;
+
+            int f = DP.SaveEntity(shelfItem);
+
+
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+    }
+}

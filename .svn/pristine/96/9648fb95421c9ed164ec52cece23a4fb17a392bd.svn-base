@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>TKBase.Framework.AutoFac</id>
+    <version>1.0.0</version>
+    <authors>TKBase.Framework.AutoFac</authors>
+    <owners>TKBase.Framework.AutoFac</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="Autofac.Extensions.DependencyInjection" version="4.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.App" version="2.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\gitlab\framework\TKBase.Framework.AutoFac\bin\Debug\netcoreapp2.1\TKBase.Framework.AutoFac.runtimeconfig.json" target="lib\netcoreapp2.1\TKBase.Framework.AutoFac.runtimeconfig.json" />
+    <file src="D:\gitlab\framework\TKBase.Framework.AutoFac\bin\Debug\netcoreapp2.1\TKBase.Framework.AutoFac.dll" target="lib\netcoreapp2.1\TKBase.Framework.AutoFac.dll" />
+  </files>
+</package>

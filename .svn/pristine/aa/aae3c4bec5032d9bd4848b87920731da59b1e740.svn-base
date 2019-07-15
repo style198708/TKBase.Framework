@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TKBase.Framework.WebApi
+{
+    /// <summary>
+    /// 日志实体
+    /// </summary>
+    public class LogEntity
+    {
+        /// <summary>
+        /// 请求ID
+        /// </summary>
+        public string TrackId { get; set; }
+
+        /// <summary>
+        /// 请求时间
+        /// </summary>
+        public string Url { get; set; }
+
+        /// <summary>
+        /// 请求方法
+        /// </summary>
+        public string Method { get; set; }
+        /// <summary>
+        /// 参数
+        /// </summary>
+        public object Param { get; set; }
+        /// <summary>
+        /// 返回结果集
+        /// </summary>
+        public object Result { get; set; }
+    }
+}

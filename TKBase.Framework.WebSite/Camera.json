@@ -1,0 +1,5 @@
+﻿{
+  "AppKey": "3782e963a0b246a4939344664ccc6fbf",
+  "AppSecret": "7c7f6754323d90c090c419acd06ae49a",
+  "Cron": "0/3 * * * * ?"
+}

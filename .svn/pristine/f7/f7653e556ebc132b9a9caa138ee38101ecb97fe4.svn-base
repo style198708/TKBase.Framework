@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>TKBase.Framework.WebApi</id>
+    <version>1.0.0</version>
+    <authors>TKBase.Framework.WebApi</authors>
+    <owners>TKBase.Framework.WebApi</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="TKBase.Framework.Log4Net" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="TKBase.Framework.Pay" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="TKBase.Framework.RabbitMQ" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="TKBase.Framework.Redis" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="TKBase.Framework.Serializer" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.App" version="2.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\gitlab\framework\TKBase.Framework.WebApi\bin\Debug\netcoreapp2.1\TKBase.Framework.WebApi.runtimeconfig.json" target="lib\netcoreapp2.1\TKBase.Framework.WebApi.runtimeconfig.json" />
+    <file src="D:\gitlab\framework\TKBase.Framework.WebApi\bin\Debug\netcoreapp2.1\TKBase.Framework.WebApi.dll" target="lib\netcoreapp2.1\TKBase.Framework.WebApi.dll" />
+  </files>
+</package>

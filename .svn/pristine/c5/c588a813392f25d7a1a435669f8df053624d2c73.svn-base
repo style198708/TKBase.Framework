@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TKBase.Framework.Thrift.EventHandler;
+using TKBase.Framework.Thrift.Protocol;
+using TKBase.Framework.Thrift.Server;
+using TKBase.Framework.Thrift.Transport;
+
+namespace TKBase.Framework.Thrift
+{
+    public class THelp
+    {
+        /// <summary>
+        /// 初始化服务器
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public static void Server<T>(T entity, int serverPort) where T : TProcessor
+        {
+            try
+            {
+                TServerSocket serverTransport = new TServerSocket(serverPort);
+
+                TBinaryProtocol.Factory factory = new TBinaryProtocol.Factory();
+
+                TServerEventHandler handler = new ServerEventHandler();
+
+                TMultiplexedProcessor processorMulti = new TMultiplexedProcessor();
+
+                processorMulti.RegisterProcessor("Service", entity);
+
+                TServer server = new TThreadPoolServer(processorMulti, serverTransport, new TTransportFactory(), factory);
+ 
+                Console.WriteLine(string.Format("服务端正在监听{0}端口", serverPort));
+
+                server.Serve();
+            }
+            catch (TTransportException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        //public static void Server<T>(T entity, int serverPort) where T : TProcessor
+        //{
+        //    try
+        //    {
+        //        TServerSocket serverTransport = new TServerSocket(serverPort);
+ 
+        //        TBinaryProtocol.Factory factory = new TBinaryProtocol.Factory();
+
+        //        TServerEventHandler handler = new ServerEventHandler();
+
+        //        TMultiplexedProcessor processorMulti = new TMultiplexedProcessor();
+        //        processorMulti.RegisterProcessor("userService", entity);
+
+        //        TServer server = new TThreadPoolServer(processorMulti, serverTransport, new TTransportFactory(), factory);
+
+        //        Console.WriteLine(string.Format("服务端正在监听{0}端口", serverPort));
+
+        //        server.Serve();
+        //    }
+        //    catch (TTransportException ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
+
+    }
+}

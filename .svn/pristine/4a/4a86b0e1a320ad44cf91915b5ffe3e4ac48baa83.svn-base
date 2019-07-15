@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using TKBase.Framework.Configuration;
+using System.Linq;
+using TKBase.Framework.MQTT.Channel;
+using TKBase.Framework.Serializer;
+using TKBase.Framework.MQTT;
+using TKBase.Framework.MQTT.Client;
+using System.Threading.Tasks;
+using TKBase.Framework.Cabinet;
+using TKBase.Framework.RabbitMQ;
+
+namespace TKBase.Framework.Cabinet
+{
+    public class CabinetHelp
+    {
+        /// <summary>
+        /// 发送指令
+        /// </summary>
+        /// <param name="Queue"></param>
+        /// <param name="ShelfCode"></param>
+        /// <returns></returns>
+        public static void SendMessage(string Queue, string Operation, BaseAction ActionData, bool IsRabbit = false)
+        {
+            System.Console.WriteLine("开始执行发布\n");
+            BaseResult cabinet = Config.Bind<BaseResult>("Device.json", Operation);
+            ActionData.Msg = string.Format(cabinet.Message, ActionData.Msg);
+            cabinet.ActionData = ActionData;
+            if (IsRabbit)
+            {
+                System.Console.WriteLine("发送RabbitMq\n");
+                RabbitMQService.Send(Queue, cabinet);
+            }
+            System.Console.WriteLine("发送MqTT\n");
+            MqttHelp<MqttClientTcpOptions>.Publish<BaseResult>(Queue, cabinet);
+        }
+    }
+}

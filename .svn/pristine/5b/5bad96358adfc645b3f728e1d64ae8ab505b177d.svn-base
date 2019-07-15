@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TKBase.Framework.Cabinet
+{
+    public class CabinetParam
+    {
+        /// <summary>
+        /// 队列名称
+        /// </summary>
+        public string Queue { get; set; }
+
+        /// <summary>
+        /// 播报语言
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        ///  签名
+        /// </summary>
+        public string Sign { get; set; }
+
+        /// <summary>
+        /// 命令参数
+        /// </summary>
+        public List<object> Action { get; set; }
+    }
+}

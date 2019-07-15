@@ -1,0 +1,84 @@
+﻿using System;
+using System.Net;
+using TKBase.Framework.Configuration;
+using TKBase.Framework.Encrypt;
+using TKBase.Framework.Helper;
+using TKBase.Framework.Serializer;
+
+namespace TKBase.Framework.EMay
+{
+    public class EMayHelp
+    {
+        private static EMayConfig EMayConfig { get; set; }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="config"></param>
+        public static void InitConfig(string config)
+        {
+            EMayConfig = Config.Bind<EMayConfig>(config);
+            if (!HttpHelper.Header.ContainsKey("appId"))
+            {
+                HttpHelper.Header.Add("appId", EMayConfig.AppId);
+            }
+            if (EMayConfig.IsCompress)
+            {
+                HttpHelper.Header.Add("gzip", "on");
+            }
+        }
+
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="config"></param>
+        public static void InitConfig()
+        {
+            EMayConfig = Config.Bind<EMayConfig>("Service.json", "Emay");
+            if (!HttpHelper.Header.ContainsKey("appId"))
+            {
+                HttpHelper.Header.Add("appId", EMayConfig.AppId);
+            }            
+            if (EMayConfig.IsCompress)
+            {
+                HttpHelper.Header.Add("gzip", "on");
+            }
+        }
+        /// <summary>
+        /// 发送短信
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        public static bool SendMesssage(string mobile, string Content)
+        {
+            string url = string.Format("{0}:{1}/inter/sendSingleSMS", EMayConfig.Host, EMayConfig.Port);
+
+            SingMessage entity = new SingMessage()
+            {
+                content = Content,
+                mobile = mobile,
+                customsmsid = DateTime.Now.ToString("yyyyMMddHHmmsss"),
+                extendedcode = "",
+                requesttime = DateTime.Now.Ticks,
+                timertime = "",
+                requestvalidperiod = EMayConfig.ValidPeriod
+            };
+            HttpWebResponse response = null;
+            string json = SerializerJson.SerializeObject(entity);
+            byte[] byteArray = EMayConfig.IsCompress ? AESHelper.AESEncrypt(GzipHelper.GZipCompressString(json), EMayConfig.SecretKey) : AESHelper.AESEncrypt(json, EMayConfig.SecretKey);
+            byte[] result = HttpHelper.SendRequestData(url, byteArray, ref response);
+
+            string code = response.GetResponseHeader("result").ToString();
+            if (code == "SUCCESS")
+            {
+                string res = AESHelper.AESDecryptString(result, EMayConfig.SecretKey);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}

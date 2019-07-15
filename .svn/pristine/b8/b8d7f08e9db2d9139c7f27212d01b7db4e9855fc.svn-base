@@ -1,0 +1,8 @@
+﻿{
+  "AppId": "EUCP-EMY-SMS0-JHRRS",
+  "SecretKey": "7181128428486295",
+  "Host": "http://shmtn.b2m.cn",
+  "Port": 80,
+  "IsCompress": false,
+  "ValidPeriod": 30 
+}

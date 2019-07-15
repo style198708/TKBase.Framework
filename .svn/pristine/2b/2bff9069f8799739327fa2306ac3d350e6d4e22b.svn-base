@@ -1,0 +1,39 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TKBase.Framework.Configuration;
+
+namespace TKBase.Framework.Pay
+{
+    /// <summary>
+    /// 支付扩展
+    /// </summary>
+    public static class PayExtensions
+    {
+        /// <summary>
+        /// 初始化微信支付
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddPay(this IServiceCollection services, string config)
+        {
+            Config.Bind<WxConfig>(config);
+            return services;
+        }
+
+        /// <summary>
+        /// 初始化App支付
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="config"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddAppPay(this IServiceCollection services, string config)
+        {
+            Config.Bind<AppConfig>(config);
+            return services;
+        }
+
+    }
+}

@@ -1,0 +1,58 @@
+﻿/******************************************************
+* author :  Lenny
+* email  :  niel@dxy.cn 
+* function: 
+* time:	2017/8/17 22:54:16 
+* clrversion :	4.0.30319.42000
+******************************************************/
+
+using System;
+using System.IO;
+using System.Net.Sockets;
+
+namespace TKBase.Framework.MRPC.Socket
+{
+    public class SocketThread
+    {
+        //connections变量表示连接数  
+        public static int Connections = 0;
+        public TcpClient Client { set; get; }
+
+        public event RequestHandler Handle;
+
+        //构造函数  
+        public SocketThread(TcpClient clientsocket)
+        {
+            //service对象接管对消息的控制  
+            this.Client = clientsocket;
+            Connections++;
+        }
+
+        public void Execute()
+        {
+            //[4]取得从客户端发来的数据  
+            NetworkStream networkStream = Client.GetStream();  //这是一个网络流，从这个网络流可以去的从客户端发来的数据  
+            BinaryReader br = new BinaryReader(networkStream);
+            BinaryWriter bw = new BinaryWriter(networkStream);
+
+            while (true)
+            {
+                try
+                {
+                    string receiveData = br.ReadString(); //接收消息  
+                    string responseData = Handle?.Invoke(receiveData);
+                    bw.Write(responseData);   //向对方发送消息  
+                    br.Close();
+                    bw.Close();
+                    Client.Close();
+                    Connections--;
+                }
+                catch (System.Exception ex)
+                {
+                    throw new Exception("server 接收消息失败", ex);
+                }
+            }
+
+        }
+    }
+}

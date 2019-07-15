@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TKBase.Framework.BaseResult\TKBase.Framework.BaseResult.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Common\TKBase.Framework.Common.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.RestSharp\TKBase.Framework.RestSharp.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Scheduler\TKBase.Framework.Scheduler.csproj" />
+  </ItemGroup>
+
+</Project>

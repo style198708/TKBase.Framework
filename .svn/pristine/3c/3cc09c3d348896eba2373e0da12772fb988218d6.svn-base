@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TKBase.Framework.Cabinet\TKBase.Framework.Cabinet.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Camera\TKBase.Framework.Camera.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Dapper\TKBase.Framework.Dapper.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Elasticsearch\TKBase.Framework.Elasticsearch.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.EMay\TKBase.Framework.EMay.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Middleware\TKBase.Framework.Middleware.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.MQTT\TKBase.Framework.MQTT.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Pay\TKBase.Framework.Pay.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.RabbitMQ\TKBase.Framework.RabbitMQ.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.RestSharp\TKBase.Framework.RestSharp.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Scheduler\TKBase.Framework.Scheduler.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.WebApi\TKBase.Framework.WebApi.csproj" />
+  </ItemGroup>
+
+</Project>

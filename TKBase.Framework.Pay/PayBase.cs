@@ -1,0 +1,97 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Xml.Linq;
+using TKBase.Framework.Configuration;
+using TKBase.Framework.Encrypt;
+using TKBase.Framework.Helper;
+
+
+namespace TKBase.Framework.Pay
+{
+    public class PayBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string ApiXml = "WxPay.xml";
+
+        internal static XElement GetApi(string Api)
+        {
+            XDocument doc = XDocument.Load(Path.Combine(ApiXml));
+            return doc.Document.Element("WxPay").Elements().Where(p => p.Attribute("id").Value == Api && p.Name.LocalName == "Item").FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 取基础信息
+        /// </summary>
+        /// <param name="ele"></param>
+        /// <param name="baseName"></param>
+        internal static void GetBaseParam(ref XElement ele, string baseName, string AppId, string MchId, string Key)
+        {
+            if (!string.IsNullOrEmpty(ele.Attribute("BaseParam").Value))
+            {
+                XDocument doc = XDocument.Load(Path.Combine("", ApiXml));
+                XElement baseele = doc.Document.Element("WxPay").Elements().Where(p => p.Attribute("id").Value == baseName && p.Name.LocalName == "BaseParam").FirstOrDefault();
+                foreach (XElement e in baseele.Elements())
+                {
+                    if (ele.Elements().Where(p => p.Name == e.Name).Count() == 0)
+                    {
+                        switch (e.Name.LocalName)
+                        {
+                            case "sign_type": e.Value = "MD5"; break;
+                            case "appid": e.Value = AppId; break;
+                            case "mch_id": e.Value = MchId; break;
+                            case "nonce_str": e.Value = MD5Helper.MD5Pay(Guid.NewGuid().ToString(), "UTF-8"); break;
+                            case "sign": e.Value = PaySign.AddSign(ele, Key); break;
+                        }
+                        ele.Add(e);
+                    }
+                }
+            }
+        }
+        internal static void GetCBaseParam(ref XElement ele, string baseName, string AppId, string MchId, string Key)
+        {
+            if (!string.IsNullOrEmpty(ele.Attribute("BaseParam").Value))
+            {
+                XDocument doc = XDocument.Load(Path.Combine("", ApiXml));
+                XElement baseele = doc.Document.Element("WxPay").Elements().Where(p => p.Attribute("id").Value == baseName && p.Name.LocalName == "BaseParam").FirstOrDefault();
+                foreach (XElement e in baseele.Elements())
+                {
+                    if (ele.Elements().Where(p => p.Name == e.Name).Count() == 0)
+                    {
+                        switch (e.Name.LocalName)
+                        {
+                            case "mch_appid": e.Value = AppId; break;
+                            case "mchid": e.Value = MchId; break;
+                            case "nonce_str": e.Value = MD5Helper.MD5Pay(Guid.NewGuid().ToString(), "UTF-8"); break;
+                            case "sign": e.Value = PaySign.AddSign(ele, Key); break;
+                        }
+                        ele.Add(e);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 提交
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        internal static XElement Post(string Url, XElement element, string WxUrl, CertificateEntity entity = null)
+        {
+            string posturl = string.Format("{0}{1}", WxUrl, Url);
+            var data = element.ToString();
+            var formDataBytes = data == null ? new byte[0] : Encoding.UTF8.GetBytes(data);
+            HttpWebResponse response = null;
+            byte[] result = HttpHelper.SendRequestData(posturl, formDataBytes, ref response, entity);
+            string reslutxml = System.Text.Encoding.UTF8.GetString(result);
+            XDocument resultDod = XDocument.Parse(reslutxml);
+            return resultDod.Element("xml");
+            //return resultDod.Element("xml").Element("result_code").Value == "SUCCESS";
+        }
+    }
+}

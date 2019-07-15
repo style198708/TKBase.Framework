@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TKBase.Framework.Common\TKBase.Framework.Common.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Encrypt\TKBase.Framework.Encrypt.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Extension\TKBase.Framework.Extension.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Serializer\TKBase.Framework.Serializer.csproj" />
+  </ItemGroup>
+
+</Project>

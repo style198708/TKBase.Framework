@@ -1,0 +1,42 @@
+﻿{
+  "Speak": {
+    "Message": "{0}",
+    "Action": "com.xiaodian.cabinet.VoiceSpeak.SpeakMsg",
+    "CallBack": "http://192.168.1.167:5003/Wx/OpenCabinetCallBack",
+    "Method": "POST",
+    "Cmd": "msg",
+    "CmdStyle": "sale"
+  },
+  "Close": {
+    "Message": "本次上架完成",
+    "Action": "com.xiaodian.cmd.CloseUpload.UpLoadClose",
+    "CallBack": "",
+    "Method": "POST",
+    "Cmd": "closeupload",
+    "CmdStyle": "march"
+  },
+  "WxOpenCabinet": {
+    "Message": "{0},智慧晓店欢迎您,柜门已打开,祝您购物愉快",
+    "Action": "com.xiaodian.cabinet.Consumer.SaleHandle",
+    "CallBack": "http://192.168.1.167:5003/Wx/OpenCabinetCallBack",
+    "Method": "POST",
+    "Cmd": "open",
+    "CmdStyle": "sale"
+  },
+  "AppOpenCabinet": {
+    "Message": "{0},柜门已打开，请尽快完成上下架",
+    "Action": "com.xiaodian.cabinet.March.MarchHandle",
+    "CallBack": "http://192.168.1.167:5003/App/OpenCabinetCallBack",
+    "Method": "POST",
+    "Cmd": "open",
+    "CmdStyle": "march"
+  },
+  "AppOpenLock": {
+    "Message": "{0},柜门已打开，请尽快完成上下架",
+    "Action": "com.xiaodian.cmd.OpenLockCmd.openLock",
+    "CallBack": "http://192.168.1.167:5003/App/OpenLockCallBack",
+    "Method": "POST",
+    "Cmd": "marchopen",
+    "CmdStyle": "march"
+  }
+}

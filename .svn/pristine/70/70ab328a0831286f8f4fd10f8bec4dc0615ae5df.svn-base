@@ -1,0 +1,26 @@
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace TKBase.DotNetty.Transport.Channels
+{
+    using System.Threading.Tasks;
+    using  TKBase.DotNetty.Common.Concurrency;
+
+    /// <summary>
+    /// <see cref="IEventExecutorGroup"/> specialized for handling <see cref="IEventLoop"/>s.
+    /// </summary>
+    public interface IEventLoopGroup : IEventExecutorGroup
+    {
+        /// <summary>
+        /// Returns <see cref="IEventLoop"/>.
+        /// </summary>
+        new IEventLoop GetNext();
+
+        /// <summary>
+        /// Register the <see cref="IChannel"/> for this event loop.
+        /// </summary>
+        /// <param name="channel">The <see cref="IChannel"/> to register.</param>
+        /// <returns>The register task.</returns>
+        Task RegisterAsync(IChannel channel);
+    }
+}

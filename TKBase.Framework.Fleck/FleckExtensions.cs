@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TKBase.Framework.Fleck
+{
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //public static class FleckExtensions
+    //{
+    //    /// <summary>
+    //    /// 新增服务
+    //    /// </summary>
+    //    /// <param name="services"></param>
+    //    /// <param name="config"></param>
+    //    /// <returns></returns>
+    //    public static IServiceCollection AddAppPay(this IServiceCollection services, string config)
+    //    {
+    //       // Config.Bind<AppConfig>(config);
+    //        return services;
+    //    }
+    //}
+}

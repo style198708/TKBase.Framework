@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TKBase.Framework.Log4Net\TKBase.Framework.Log4Net.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Pay\TKBase.Framework.Pay.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.RabbitMQ\TKBase.Framework.RabbitMQ.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Redis\TKBase.Framework.Redis.csproj" />
+    <ProjectReference Include="..\TKBase.Framework.Serializer\TKBase.Framework.Serializer.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Template>  
+  <Item Title="开门" Category="100" Message="{0},智慧晓店欢迎您,柜门已打开,祝您购物愉快"   Action="com.xiaodian.cabinet.Consumer.SaleHandle" CallBack="" Method=""  >
+    <Cmd index="0"></Cmd>
+    <Sign index="1"></Sign>
+    <CmdStyle index="2"></CmdStyle>
+    <ShelfCode index="3"></ShelfCode>
+
+  </Item>
+
+  <Item Title="播报语言" Category="101" Action="com.xiaodian.cabinet.VoiceSpeak.SpeakMsg" CallBack="" Method="" >
+    <Cmd index="0"></Cmd>
+  </Item> 
+</Template>

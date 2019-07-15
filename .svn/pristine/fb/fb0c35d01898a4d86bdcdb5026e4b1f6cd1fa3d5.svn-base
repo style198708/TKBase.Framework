@@ -1,0 +1,41 @@
+﻿using Quartz;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace TKBase.Framework.Scheduler
+{
+    public class JobListener : IJobListener
+    {
+        public string Name => "JobListener";
+        public static int count = 0;
+        //job开始执行之前调用
+        public async Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = default)
+        {
+            await Console.Out.WriteLineAsync(string.Format("任务开始执行之前调用,开始时间:{0}", DateTime.Now));
+        }
+
+        //job每次执行之后调用
+        public async Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default)
+        {
+            await Console.Out.WriteLineAsync(string.Format("job每次执行之后调用,执行时间:{0}", DateTime.Now));
+        }
+
+        //job执行结束之后调用
+        public async Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException, CancellationToken cancellationToken = default)
+        {
+            count++;
+            var manage = new ScheduleManage();
+            var model = manage.GetScheduleModel(context.JobDetail.Key.Group, context.JobDetail.Key.Name);
+            await Console.Out.WriteLineAsync("job执行结束之后调用  " + count);
+            if (model.RunTimes != 0 && count == model.RunTimes)
+            {
+                count = 0;
+                // new ClientManage().ClientSend(model.JobId);
+            }
+
+        }
+    }
+}

@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using TKBase.Framework.Configuration;
+using System.Linq;
+using TKBase.Framework.RabbitMQ;
+using TKBase.Framework.Serializer;
+
+namespace TKBase.Framework.Cabinet
+{
+    public class CabinetHelp
+    {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static XDocument doc;
+
+        static CabinetHelp()
+        {
+            doc = XDocument.Load(Config.Settings.ConfigPath + "Message.xml");
+        }
+
+
+        /// <summary>
+        /// 发送指令 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="objs"></param>
+        public static bool SendMessage(int Category, CabinetParam param)
+        {
+            CabinetResult result = new CabinetResult();
+            XElement element = doc.Element("Template").Elements("Item").Where(p => p.Attribute("Category").Value == Category.ToString()).FirstOrDefault();
+            if (element != null)
+            {
+                StringBuilder bulider = new StringBuilder();
+                List<string> json = new List<string>();
+                List<string> page = new List<string>();
+                bulider.Append("{");
+                foreach (XElement ele in element.Elements())
+                {
+                    int index = Convert.ToInt32(ele.Attribute("index").Value);
+                    page.Add(string.Format("\"{0}\":\"{1}\"", ele.Name, param.Action[index]));
+                }
+                page.Add(string.Format("\"Msg\":\"{0}\"", string.Format(element.Attribute("Message").Value, param.Message ?? "")));
+                bulider.Append(string.Join(",", page.ToArray()));
+                bulider.Append("}");
+
+                result.ActionData = SerializerJson.DeserializeObject(bulider.ToString(), typeof(object)); ;
+                result.Sign = param.Sign;
+                result.Cmd = element.Attribute("Cmd").Value;
+                result.CmdStyle = element.Attribute("CmdStyle") == null ? "" : element.Attribute("CmdStyle").Value;
+                result.Action = element.Attribute("Action").Value;
+                result.CallBack = element.Attribute("CallBack").Value;
+                result.Method = element.Attribute("Method").Value;
+
+            }
+            bool flag = RabbitMQService.Send(param.Queue, result);
+            return flag;
+        }
+    }
+}

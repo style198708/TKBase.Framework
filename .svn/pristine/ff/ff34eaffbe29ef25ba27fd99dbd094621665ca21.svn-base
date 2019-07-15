@@ -1,0 +1,7 @@
+2018-10-27 15:48:26,667 [12] INFO  TKBase.Framework.WebApi.BaseController [(null)] - {"Key":null,"Value":null}
+2018-10-27 15:48:26,795 [12] INFO  TKBase.Framework.WebApi.BaseController [(null)] - Microsoft.AspNetCore.Mvc.ObjectResult
+2018-10-27 15:50:47,083 [12] INFO  TKBase.Framework.WebApi.BaseController [(null)] - {"Key":null,"Value":null}
+2018-10-27 15:50:47,230 [12] INFO  TKBase.Framework.WebApi.BaseController [(null)] - Microsoft.AspNetCore.Mvc.ObjectResult
+2018-10-27 15:52:25,864 [10] INFO  TKBase.Framework.WebApi.BaseController [(null)] - {"Key":null,"Value":null}
+2018-10-27 15:54:11,717 [7] INFO  TKBase.Framework.WebApi.BaseController [(null)] - {"Key":null,"Value":null}
+2018-10-27 15:54:24,316 [7] INFO  TKBase.Framework.WebApi.BaseController [(null)] - Microsoft.AspNetCore.Mvc.ObjectResult

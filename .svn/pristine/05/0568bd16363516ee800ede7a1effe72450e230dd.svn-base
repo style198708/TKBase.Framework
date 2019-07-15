@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TKBase.Framework.Cabinet.Entity
+{
+    public class BaseResult
+    {
+        /// <summary>
+        /// 回调路径
+        /// </summary>
+        public string CallBack { get; set; }
+
+        /// <summary>
+        /// 方法
+        /// </summary>
+        public string Method { get; set; }
+
+
+    }
+}

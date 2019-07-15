@@ -1,0 +1,8 @@
+﻿using System;
+
+namespace TKBase.Framework.DotNetty
+{
+    public class Class1
+    {
+    }
+}

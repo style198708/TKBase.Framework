@@ -1,0 +1,107 @@
+﻿using log4net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using TKBase.Framework.RabbitMQ;
+using TKBase.Framework.Serializer;
+
+namespace TKBase.Framework.WebApi
+{
+    public class BaseController : Controller
+    {
+
+
+        /// <summary>
+        /// 用户票据
+        /// </summary>
+        public TicketEntity CurrentUserTicket
+        {
+            get;
+            set;
+        }
+
+        public string Ip { get; set; }
+
+        /// <summary>
+        /// 日志记录
+        /// </summary>
+        public ILog Log
+        {
+            get { return LogManager.GetLogger("Log4Repository", typeof(BaseController)); }
+        }
+
+        public string GetHostAddress()
+        {
+            var ip = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = HttpContext.Connection.RemoteIpAddress.ToString();
+            }
+
+            //最后判断获取是否成功，并检查IP地址的格式（检查其格式非常重要）
+            if (!string.IsNullOrEmpty(ip) && IsIP(ip))
+            {
+                return ip;
+            }
+            return "127.0.0.1";
+        }
+
+        /// <summary>
+        /// 记录请求参数日志
+        /// </summary>
+        /// <param name="context"></param>
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            HttpContext httpc = context.HttpContext;
+            LogEntity log = new LogEntity()
+            {
+                TrackId = httpc.TraceIdentifier,
+                Method = httpc.Request.Method,
+                Param = context.ActionArguments.Count == 0 ? new object() : context.ActionArguments.FirstOrDefault(),
+                Result = "",
+                BegTime = DateTime.Now,
+                Url = string.Format("{0}:{1}{2}", httpc.Request.Scheme, httpc.Request.Host.Value, httpc.Request.Path.Value)
+            };
+            RabbitMQService.Send("Log", log, true);
+            Log.Info(log);
+
+        }
+
+        /// <summary>
+        /// 检查IP地址格式
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public bool IsIP(string ip)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            HttpContext httpc = context.HttpContext;
+
+            LogEntity log = new LogEntity()
+            {
+                TrackId = httpc.TraceIdentifier,
+                Method = httpc.Request.Method,
+                Param = "",
+                EndTime = DateTime.Now,
+                Url = string.Format("{0}:{1}{2}", httpc.Request.Scheme, httpc.Request.Host.Value, httpc.Request.Path.Value),
+                Result = context.Result == null ? "" : ((ObjectResult)context.Result).Value,
+            };
+            RabbitMQService.Send("Log", log);
+            Log.Info(log);
+            base.OnActionExecuted(context);
+        }
+
+    }
+}

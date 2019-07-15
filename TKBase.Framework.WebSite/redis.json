@@ -1,0 +1,7 @@
+﻿{
+  "RedisMode": "Single",
+  "RedisConnectionSingle": "192.168.1.166:6379,allowadmin=true,password=value,defaultDatabase=0,poolsize=50,ssl=false,writeBuffer=10240,prefix=",
+  "RedisConnectionMultiple": [
+    "192.168.1.166:6379,allowadmin=true,password=value,defaultDatabase=0,poolsize=50,ssl=false,writeBuffer=10240,prefix="
+  ]
+}

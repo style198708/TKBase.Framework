@@ -1,0 +1,24 @@
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+
+namespace TKBase.Framework.WebApi
+{
+    public class BaseApiController: BaseController
+    {
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            Ip = GetHostAddress();
+            bool a = context.HttpContext.Request.Headers.ContainsKey("AccessToken");
+            bool b = context.HttpContext.Request.Headers.TryGetValue("AccessToken", out Microsoft.Extensions.Primitives.StringValues token);
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                RedisCacheTicket authBase = new RedisCacheTicket(token);
+                TicketEntity userTicket = authBase.CurrUserInfo;
+                if (userTicket != null && userTicket.MemberID > 0)
+                {
+                    CurrentUserTicket = userTicket;
+                }
+            }  
+        }
+    }
+}

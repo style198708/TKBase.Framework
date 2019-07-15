@@ -1,0 +1,56 @@
+{
+  "Emay": {
+    "AppId": "EUCP-EMY-SMS1-1VZ6G",
+    "SecretKey": "FDB6B273D44D0A65",
+    "Host": "http://shmtn.b2m.cn",
+    "Port": 80,
+    "IsCompress": false,
+    "ValidPeriod": 30
+  },
+  "WxPay": {
+    //Ïþµê
+    "AppId": "wx718f493b03ba0a6c",
+    "AppSecret": "5b59a850336af45ff39cf466c2b9fc02",
+    "MchId": "1505677991",
+    "Key": "H8XJwn6LXCNeGR7rzw4J26NDGCdKMf8T",
+    "WalletRechargeBack": "http://test.gogomaimai.com/Pay/WalletRechargeCallBack",
+    "PayNotifyUrl": "http://test.gogomaimai.com/Pay/PayCallBack",
+    "LockPayNotifyUrl": "http://test.gogomaimai.com/Wx/OpenLockCallBack",
+    "WxUrl": "https://api.mch.weixin.qq.com/"
+  },
+  "AppPay": {
+    "AppId": "wxe15df5a8d2012d43",
+    "AppSecret": "ba94cce3cb18d6f1eff2b2c83a8ec773",
+    "MchId": "1512160191",
+    "Key": "5pvV7d2MWk9GLUz1jSKpZGeOKJZgtQPt",
+    "WalletDepositBack": "http://test.gogomaimai.com/Member/MemberWalletChangeCallBack",
+    "WalletRentBack": "http://test.gogomaimai.com/Member/MemberPayRentCallBack",
+    "WalletOrderPayBack": "http://test.gogomaimai.com/Member/MemberPayUnOrderCallBack",
+    "PayNotifyUrl": "https://www.123jqr.cn/Pay/OrderPayNotify",
+    "WxUrl": "https://api.mch.weixin.qq.com/"
+
+  },
+  "AppLockPay": {
+    "AppId": "wx52d175356dd9f544",
+    "AppSecret": "1cbfd567472551054a17c9b870bfe3a3",
+    "MchId": "1523939291",
+    "Key": "vBtcbimi64n0kHSTgbKQxXvDWYepKnXb",
+    "WalletDepositBack": "http://test.gogomaimai.com/Member/MemberWalletChangeCallBack",
+    "WalletRentBack": "http://test.gogomaimai.com/Member/MemberPayRentCallBack",
+    "WalletOrderPayBack": "http://test.gogomaimai.com/Member/MemberPayUnOrderCallBack",
+    "PayNotifyUrl": "https://www.123jqr.cn/Pay/OrderPayNotify",
+    "WxUrl": "https://api.mch.weixin.qq.com/"
+
+  },
+  "Camera": {
+    "AppKey": "3782e963a0b246a4939344664ccc6fbf",
+    "AppSecret": "7c7f6754323d90c090c419acd06ae49a",
+    "Cron": "0/3 * * * * ?",
+    "ImgFile": "G:\\1212"
+  },
+
+  "RechargeMessage": {
+    "TemplateId": "WXZCK8SgxuzqvgobEp-1Eezv6yzFxml8fl-Tbcx9uWw",
+    "Url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx718f493b03ba0a6c&redirect_uri=http://wx.miaogo.com.cn/subjoinus.html&response_type=code&scope=snsapi_userinfo&state=Ex448#wechat_redirect"
+  }
+}
